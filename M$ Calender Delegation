@@ -1,0 +1,17 @@
+#Connect to EAC
+Connect-ExchangeOnline -UserPrincipalName <admin>
+
+#get Calender perms - Replace user with email
+Get-MailboxFolderPermission -Identity "User:\Calendar"
+
+#You can find all the calendars in your organization that a particular user has been granted access to - Replace Muller with first or last name
+Get-Mailbox | ForEach-Object {Get-MailboxFolderPermission $_":\calendar"} | Where {$_.User -like "*Muller*"} | Select Identity, User, AccessRights
+
+#Add access - user2 gets perms
+Add-MailboxFolderPermission -Identity user1@domain.com:\calendar -user user2@domain.com -AccessRights Editor
+
+#Remove access - user2 gets access removed
+Remove-MailboxFolderPermission -Identity "user@domain.com:\Calendar" -User "user2@domain.com"
+
+#More Reading:
+#https://theitbros.com/add-calendar-permissions-in-office-365-via-powershell/
