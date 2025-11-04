@@ -1,0 +1,2 @@
+#Add perms to mailbox
+Add-MailboxPermission -Identity site@aro.homes -User user@domain.com -AccessRights FullAccess
