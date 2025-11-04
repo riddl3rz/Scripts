@@ -1,0 +1,5 @@
+#Give Delegate access to mailbox
+Add-MailboxPermission -Identity user1@domain.com -User user2@domain.com -AccessRights FullAccess
+
+#Get Mailbox Size
+Get-MailboxStatistics -Identity "user@domain.com" | Format-List TotalItemSize,TotalDeletedItemSize,StorageLimitStatus
