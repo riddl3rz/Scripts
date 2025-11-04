@@ -1,0 +1,17 @@
+# Hide any mailboxes with old primary SMTP
+Get-Mailbox -Filter {PrimarySmtpAddress -like "*@domain.com"} | Set-Mailbox -HiddenFromAddressListsEnabled $true
+
+# Hide any mailboxes with old aliases (proxy addresses)
+Get-Mailbox -ResultSize Unlimited | Where-Object {$_.EmailAddresses -like "*@domain.com"} | Set-Mailbox -HiddenFromAddressListsEnabled $true
+
+# Hide mail contacts
+Get-MailContact -Filter {ExternalEmailAddress -like "*@domain.com"} | Set-MailContact -HiddenFromAddressListsEnabled $true
+
+# Hide mail users (common for external mail-enabled users)
+Get-MailUser -Filter {ExternalEmailAddress -like "*@domain.com"} | Set-MailUser -HiddenFromAddressListsEnabled $true
+
+# Hide any distribution groups
+Get-DistributionGroup -Filter {PrimarySmtpAddress -like "*@domain.com"} | Set-DistributionGroup -HiddenFromAddressListsEnabled $true
+
+# Hide groups with aliases (if some may have been renamed but kept old aliases)
+Get-DistributionGroup -ResultSize Unlimited | Where-Object {$_.EmailAddresses -like "*@domain.com"} | Set-DistributionGroup -HiddenFromAddressListsEnabled $true
